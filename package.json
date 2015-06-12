@@ -17,7 +17,7 @@
     "stream-cache": "~0.0.1",
     "strip-ansi": "^2.0.1",
     "supports-color": "^1.3.1",
-    "webpack-dev-middleware": "^1.0.7"
+    "webpack-dev-middleware": "https://github.com/ssnau/webpack-dev-middleware/tarball/0d2beb349e2b12858e7845bbb4bbac4f821ae835"
   },
   "devDependencies": {
     "css-loader": "~0.7.1",

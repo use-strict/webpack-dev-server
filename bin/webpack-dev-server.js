@@ -37,7 +37,9 @@ var optimist = require("optimist")
 
 	.describe("port", "The port").default("port", 8080)
 
-	.describe("host", "The hostname/ip address the server will bind to").default("host", "localhost");
+	.describe("host", "The hostname/ip address the server will bind to").default("host", "localhost")
+    
+    .boolean("useRealFileSystem").describe("useRealFileSystem", "Write bundles to real file system instead of in-memory virtual file system").default("useRealFileSystem", false);
 
 require("webpack/bin/config-optimist")(optimist);
 
@@ -53,6 +55,10 @@ if(argv.host !== "localhost" || !options.host)
 
 if(argv.port !== 8080 || !options.port)
 	options.port = argv.port;
+    
+if (argv.useRealFileSystem) {
+    options.useRealFileSystem = true;
+}
 
 if(!options.publicPath) {
 	options.publicPath = firstWpOpt.output && firstWpOpt.output.publicPath || "";
@@ -65,7 +71,9 @@ if(!options.outputPath)
 if(!options.filename)
 	options.filename = firstWpOpt.output && firstWpOpt.output.filename;
 [].concat(wpOpt).forEach(function(wpOpt) {
-	wpOpt.output.path = "/";
+    if (!options.useRealFileSystem) {
+	   wpOpt.output.path = "/";
+    }
 });
 if(!options.hot)
 	options.hot = argv["hot"];
